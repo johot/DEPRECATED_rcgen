@@ -1,11 +1,12 @@
 {
   "name": "rcgen",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "tsc && node dist/cli.js",
     "page-cmd": "tsc && node dist/cli.js -- page",
+    "clip-cmd": "tsc && node dist/cli.js -- clip",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lp": "npm run build && yalc push",
@@ -20,6 +21,7 @@
   },
   "dependencies": {
     "@types/inquirer": "^7.3.1",
+    "clipboardy": "^2.3.0",
     "commander": "^5.0.0",
     "inquirer": "^7.3.3",
     "pascalcase": "^1.0.0"
