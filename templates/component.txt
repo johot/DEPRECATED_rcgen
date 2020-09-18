@@ -1,0 +1,9 @@
+import React from "react";
+
+export type ComponentNameProps = {
+  className?: string;
+};
+
+export const ComponentName = (props: ComponentNameProps) => {
+  return <div className={props.className}>Hello</div>;
+};
