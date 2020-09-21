@@ -5,5 +5,6 @@ Just created for myself, strongly opinionated and uses TypeScript for all genera
 ## Usage
 
 ```
-rc
+rc <componentName>
+rc --help
 ```
