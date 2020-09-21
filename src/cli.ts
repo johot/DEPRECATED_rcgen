@@ -14,9 +14,9 @@ program.version(packageJson.version);
 
 program
   .arguments("<componentName>")
-  .option("-C, --clip", "Add component to clipboard (instead of file)")
-  .option("-P, --page", "Create Next.js page component")
-  .option("-I, --import", "Include React import")
+  .option("-c, --clip", "Add component to clipboard (instead of file)")
+  .option("-p, --page", "Create Next.js page component")
+  .option("-i, --import", "Include React import")
   .action((componentName: any, options: any) => {
     if (options.page) throw new Error("Not implemented yet");
 
