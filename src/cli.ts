@@ -18,49 +18,47 @@ program
   .option("-p, --page", "Create Next.js page component")
   .option("-i, --import", "Include React import")
   .action((componentName: any, options: any) => {
-    if (options.page) throw new Error("Not implemented yet");
-
-    createReactComponent(componentName, options.import, options.clip ? "clipboard" : "file");
+    createComponent(
+      componentName,
+      options.page ? "nextjspage" : "component",
+      options.import,
+      options.clip ? "clipboard" : "file"
+    );
   });
 
 program.parse(process.argv);
 
-async function createReactComponent(
+function createComponent(
   componentName: string,
+  templateType: "component" | "nextjspage",
   addReactImport: boolean,
-  output: "file" | "clipboard" = "file"
+  output: "file" | "clipboard"
 ) {
-  // const answers = await inquirer.prompt([
-  //   {
-  //     name: "componentName",
-  //     message: "⚛️ Component name?",
-  //   },
-  // ]);
+  const originalComponentName = componentName;
 
-  createComponent(componentName, addReactImport, output);
-}
-
-function createComponent(componentName: string, addReactImport: boolean, output: "file" | "clipboard") {
+  // Pascal case it!
   componentName = pascalcase(componentName);
 
-  let template = fs.readFileSync(path.join(__dirname, "../templates/component.txt"), "utf-8");
-  template = template.replace(/ComponentName/g, componentName);
+  let templateContents = fs.readFileSync(path.join(__dirname, "../templates/" + templateType + ".txt"), "utf-8");
+  templateContents = templateContents.replace(/ComponentName/g, componentName);
 
-  if (!addReactImport) template = template.replace(/import React from "react";/g, "");
+  if (!addReactImport) templateContents = templateContents.replace(/import React from "react";/g, "");
 
-  template = template.trim();
+  templateContents = templateContents.trim();
 
-  const outFileName = path.resolve(process.cwd() + "/" + componentName + ".tsx");
+  const outFileName = path.resolve(
+    process.cwd() + "/" + (templateType === "nextjspage" ? originalComponentName : componentName) + ".tsx"
+  );
 
   if (output === "file") {
     if (fs.existsSync(outFileName)) {
       console.error("File already exists:", outFileName);
     } else {
-      fs.writeFileSync(outFileName, template);
+      fs.writeFileSync(outFileName, templateContents);
       console.log(`Component  (${chalk.magentaBright(componentName)}) created in file:`, outFileName, "👍");
     }
   } else {
-    clipboardy.writeSync(template);
+    clipboardy.writeSync(templateContents);
     console.log(`Component (${chalk.magentaBright(componentName)}) pasted to clipboard 👍`);
   }
 }

@@ -1,0 +1,16 @@
+import { Fragment } from "react";
+import { GetServerSideProps } from "next";
+
+export type ComponentNameProps = {
+  className?: string;
+};
+
+export default function ComponentName() {
+  return <Fragment>Hello world!</Fragment>;
+}
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  return {
+    props: {},
+  };
+};
